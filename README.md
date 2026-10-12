@@ -1,3 +1,3 @@
-# 43 Stran — cleaning rota
+# 43 Stran House Rota
 
 Do your chores.
