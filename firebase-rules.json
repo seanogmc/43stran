@@ -1,0 +1,28 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "rota": {
+      ".read": "auth != null",
+
+      "weeks": {
+        "$week": {
+          ".validate": "$week.matches(/^\\d{4}-\\d{2}-\\d{2}$/)",
+
+          "$person": {
+            ".write": "auth != null",
+            ".validate": "!newData.exists() || (newData.hasChildren(['done', 'at']) && newData.child('done').isBoolean() && newData.child('at').isNumber())"
+          }
+        }
+      },
+
+      "meta": {
+        "started": {
+          ".write": "auth != null",
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/)"
+        }
+      }
+    }
+  }
+}

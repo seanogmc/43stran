@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cleaning rota &middot; 43 Stran</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="page">
+
+    <header class="masthead">
+      <div class="masthead__row">
+        <h1 class="masthead__title">43 Stran</h1>
+        <p class="masthead__status" id="mode"></p>
+      </div>
+      <p class="masthead__sub">Cleaning rota</p>
+    </header>
+
+    <p class="whoami">
+      You are <strong id="me-name">nobody yet</strong>.
+      <button type="button" class="linkbtn" id="change-me">Choose</button>
+    </p>
+
+    <section class="current" aria-labelledby="current-heading">
+      <h2 class="label" id="current-heading">Week <span id="week-number">1</span></h2>
+      <p class="current__dates" id="week-dates"></p>
+
+      <ul class="rota" id="rota"></ul>
+
+      <p class="progress" id="progress" role="status"></p>
+    </section>
+
+    <section class="upnext" aria-labelledby="upnext-heading">
+      <h2 class="label" id="upnext-heading">Up next</h2>
+      <ul class="upnext__list" id="upnext"></ul>
+    </section>
+
+    <section class="record" aria-labelledby="record-heading" id="record-section" hidden>
+      <h2 class="label" id="record-heading">Record</h2>
+      <div id="record"></div>
+      <p class="record__note" id="record-note"></p>
+    </section>
+
+    <section class="history" aria-labelledby="history-heading" id="history-section" hidden>
+      <h2 class="label" id="history-heading">Recent weeks</h2>
+      <ul class="history__list" id="history"></ul>
+    </section>
+
+    <footer class="foot">
+      <p id="resets"></p>
+    </footer>
+
+  </main>
+
+  <dialog class="picker" id="picker" aria-labelledby="picker-heading">
+    <form method="dialog">
+      <h2 class="label" id="picker-heading">Who are you?</h2>
+      <p class="picker__hint">
+        Remembered on this device only, so you can tick your own jobs and
+        nobody else's.
+      </p>
+      <ul class="picker__list" id="picker-list"></ul>
+    </form>
+  </dialog>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

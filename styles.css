@@ -1,0 +1,431 @@
+/* ------------------------------------------------------------------
+   43 Stran — cleaning rota
+   Minimal, monospaced, no decoration that isn't doing a job.
+   ------------------------------------------------------------------ */
+
+:root {
+  --ink: #111111;
+  --paper: #ffffff;
+  --muted: #7a7a7a;
+  --warn: #b3261e;
+
+  --mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+
+  /* The tick drawn inside a completed checkbox. It lives in a custom
+     property so the dark-mode block below can swap it for a dark tick. */
+  --tick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 6.4 L4.8 9 L9.8 3.4' fill='none' stroke='%23ffffff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Optional: follow the system light/dark setting. Delete this block if
+   you'd rather the page stay light no matter what. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #ededed;
+    --paper: #121212;
+    --muted: #8c8c8c;
+    --warn: #ff8a80;
+
+    --tick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 6.4 L4.8 9 L9.8 3.4' fill='none' stroke='%23111111' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2.5rem 1.25rem 4rem;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+.page {
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+/* ---- Masthead ---------------------------------------------------- */
+
+.masthead {
+  padding-bottom: 1rem;
+}
+
+.masthead__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.masthead__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.masthead__status {
+  margin: 0;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+/* Says "this isn't syncing" without shouting about it. */
+.masthead__status--warn {
+  color: var(--warn);
+}
+
+.masthead__sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+/* ---- Section labels ---------------------------------------------- */
+
+.label {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+/* ---- "You are ..." ------------------------------------------------ */
+
+.whoami {
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.whoami strong {
+  color: var(--ink);
+}
+
+.linkbtn {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.linkbtn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ---- Current week ------------------------------------------------ */
+
+.current {
+  margin-top: 2rem;
+}
+
+.current__dates {
+  margin: 0.4rem 0 1.25rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---- The rota rows ----------------------------------------------- */
+
+.rota {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task__label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  cursor: pointer;
+}
+
+/* Rows that aren't yours aren't clickable, so don't pretend otherwise. */
+.task--locked .task__label {
+  cursor: default;
+}
+
+/* Person, area and time sit side by side. The 8ch column is a monospaced
+   trick: 8 characters is exactly as wide as the longest name ("Sean Og"),
+   so every area name starts at the same x position. */
+.task__body {
+  display: grid;
+  grid-template-columns: 8ch 1fr auto;
+  align-items: baseline;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.task__person {
+  font-weight: 700;
+}
+
+.task__quadrant {
+  color: var(--muted);
+}
+
+.task__at {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.task--done .task__person,
+.task--done .task__quadrant {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+/* ---- The checkbox ------------------------------------------------- */
+
+.task__check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.05em;
+  height: 1.05em;
+  margin: 0;
+  border: 1px solid var(--ink);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0.7em;
+  cursor: pointer;
+}
+
+.task__check:checked {
+  background-color: var(--ink);
+  background-image: var(--tick);
+}
+
+.task__check:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Not yours: dimmed, and an unticked one goes dashed so it reads as
+   "out of bounds" rather than "still to do". */
+.task__check:disabled {
+  cursor: default;
+  border-color: var(--muted);
+}
+
+.task__check:disabled:not(:checked) {
+  border-style: dashed;
+}
+
+/* ---- Progress line ------------------------------------------------ */
+
+.progress {
+  margin: 1rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.progress--complete {
+  color: var(--ink);
+}
+
+/* ---- Next week ----------------------------------------------------- */
+
+.upnext {
+  margin-top: 2.5rem;
+}
+
+.upnext__list {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.upnext__list li {
+  padding: 0.15rem 0;
+}
+
+/* ---- Record: the tally --------------------------------------------
+   This is the accountability bit. An unanswered question is "did they do
+   it?"; the answer has to survive the week rolling over, so it lives here
+   and not in the checklist above. */
+
+.record,
+.history {
+  margin-top: 2.5rem;
+}
+
+.record__table {
+  width: 100%;
+  margin-top: 0.75rem;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.record__table th,
+.record__table td {
+  padding: 0.3rem 0;
+  text-align: right;
+  font-weight: 400;
+}
+
+.record__table th:first-child,
+.record__table td:first-child {
+  text-align: left;
+}
+
+.record__table thead th {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.record__table tbody th {
+  font-weight: 700;
+}
+
+.record__missed {
+  color: var(--warn);
+}
+
+.record__note {
+  margin: 0.75rem 0 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* ---- Recent weeks --------------------------------------------------- */
+
+.history__list {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+}
+
+.history__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 1rem;
+  padding: 0.4rem 0;
+}
+
+.history__week {
+  color: var(--muted);
+}
+
+.history__result {
+  color: var(--muted);
+  text-align: right;
+}
+
+/* A miss is stated, not whispered. */
+.history__result--missed {
+  color: var(--warn);
+}
+
+/* ---- Footer --------------------------------------------------------- */
+
+.foot {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.foot p {
+  margin: 0;
+}
+
+/* ---- "Who are you?" dialog ------------------------------------------ */
+
+.picker {
+  width: calc(100% - 2.5rem);
+  max-width: 22rem;
+  padding: 1.5rem;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.picker::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.picker__hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.picker__list {
+  display: grid;
+  gap: 0.4rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.picker__choice {
+  width: 100%;
+  padding: 0.55rem 0.6rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.picker__choice:hover {
+  border-color: var(--ink);
+}
+
+.picker__choice:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ---- Narrow screens --------------------------------------------------
+   Under ~30rem there isn't room for a name, an area and a time on one
+   line, so stack them instead of letting the long areas wrap awkwardly. */
+
+@media (max-width: 30rem) {
+  .task__body {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .task__at {
+    text-align: left;
+  }
+
+  .history__row {
+    grid-template-columns: 1fr;
+  }
+
+  .history__result {
+    text-align: left;
+  }
+}
