@@ -117,25 +117,32 @@ body {
   color: var(--ink);
 }
 
-.linkbtn {
-  padding: 0;
-  border: 0;
-  background: none;
+.btn {
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
   font: inherit;
-  color: inherit;
-  text-decoration: underline;
   cursor: pointer;
 }
 
-.linkbtn:focus-visible {
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
 
-/* ---- Current week ------------------------------------------------ */
+.auth {
+  margin-top: 1.5rem;
+}
 
-.current {
-  margin-top: 2rem;
+.auth__error {
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--warn);
 }
 
 .current__dates {

@@ -11,7 +11,7 @@
           ".validate": "$week.matches(/^\\d{4}-\\d{2}-\\d{2}$/)",
 
           "$person": {
-            ".write": "auth != null",
+            ".write": "auth != null && root.child('users').child(auth.uid).child('name').val() === $person",
             ".validate": "!newData.exists() || (newData.hasChildren(['done', 'at']) && newData.child('done').isBoolean() && newData.child('at').isNumber())"
           }
         }
@@ -19,9 +19,18 @@
 
       "meta": {
         "started": {
-          ".write": "auth != null",
+          ".write": "auth != null && root.child('users').exists()",
           ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/)"
         }
+      }
+    },
+
+    "users": {
+      ".read": "auth != null",
+      ".write": "false",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".validate": "newData.hasChild('name') && newData.child('name').isString() && data.parent().parent().parent().child('rota').exists() ? true : true"
       }
     }
   }

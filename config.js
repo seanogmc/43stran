@@ -19,7 +19,16 @@
 // If this stays null the site still works, but ticks are kept only on the
 // device that made them and nothing is shared. The header will say so.
 
-export const FIREBASE_CONFIG = null;
+export const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBS7jNXQlwtXnsXN5CThKibVJYXiwaeReo",
+  authDomain: "stran-rota.firebaseapp.com",
+  databaseURL:
+    "https://stran-rota-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "stran-rota",
+  storageBucket: "stran-rota.firebasestorage.app",
+  messagingSenderId: "164303512153",
+  appId: "1:164303512153:web:4c67c5981afe9e30588748",
+};
 
 /*
 export const FIREBASE_CONFIG = {
