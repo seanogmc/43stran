@@ -1,7 +1,7 @@
 const PERSON_EMAILS = {
   Theo: "tmcaleer2k18@gmail.com",
   "Sean Og": "seanogmc@yahoo.com",
-  Sean: "",
+  Sean: "seanmcgold1@gmail.com",
   Conor: "",
 };
 
