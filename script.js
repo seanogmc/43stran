@@ -2,7 +2,7 @@ const PERSON_EMAILS = {
   Theo: "tmcaleer2k18@gmail.com",
   "Sean Og": "seanogmc@yahoo.com",
   Sean: "seanmcgold1@gmail.com",
-  Conor: "",
+  Conor: "cjp.casey05@gmail.com",
 };
 
 const EMAIL_TO_PERSON = Object.fromEntries(
